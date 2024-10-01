@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="footer-content-left space-y-6">
           <img src={assests.logo} alt="logo" className="w-32 hover:scale-105 transition-transform duration-30" />
           <p className="text-md leading-6">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet debitis incidunt quam voluptatum perferendis voluptates voluptatem nostrum qui et minima eaque temporibus, porro mollitia provident vitae, repellendus quod veritatis velit.
+            At CareMate, we believe in providing quality care and companionship for the elderly. Our services ensure that seniors receive the respect, support, and attention they deserve, whether it’s through home visits, medical assistance, or just lending a compassionate ear.
           </p>
           
           {/* Social Icons */}
@@ -54,6 +54,7 @@ const Footer = () => {
       <hr className="my-8 border-gray-600" />
       <div className="text-center">
         <p className="text-md font-semibold">&copy; 2024 CareMate.com - All Rights Reserved.</p>
+        <p className="text-md font-semibold mt-2">Made with ❤️ by Byte Battalion</p> {/* Added line here */}
       </div>
     </div>
   );

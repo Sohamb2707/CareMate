@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { assests } from '../constants';
+import ChatbotModal from './ChatBotModal'; // Import ChatbotModal
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComments } from '@fortawesome/free-solid-svg-icons';
 
 const AboutUs = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -11,13 +16,30 @@ const AboutUs = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleChatbotClick = () => {
+    setIsChatbotOpen(true);
+  };
+
+  const closeChatbot = () => {
+    setIsChatbotOpen(false);
+  };
+
   return (
     <div className="relative bg-gray-100 min-h-screen flex flex-col p-6">
-      <div className="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center bg-opacity-70" style={{ backgroundImage: `url(${assests.aboutImg3})` }}>
+      <div className="absolute top-0 left-0 w-full h-1/2 md:h-1/2 bg-cover bg-center bg-opacity-70" style={{ backgroundImage: `url(${assests.aboutImg3})` }}>
         <div className="w-full h-full bg-black opacity-80 absolute"></div>
         <div className={`relative z-10 text-center mt-40 transition-all duration-1000 ease-in-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
           <h2 className="text-4xl font-bold text-white mb-4">About Us</h2>
-          <p className="text-gray-300 mt-2 text-lg">We are dedicated to providing quality services and ensuring customer satisfaction.</p>
+          <p className="text-orange-500 mt-2 text-lg">We are dedicated to providing quality services and ensuring customer satisfaction.</p>
         </div>
       </div>
 
@@ -32,10 +54,25 @@ const AboutUs = () => {
           <ul className="text-gray-700 mb-4 list-disc list-inside">
             <li>Our team consists of experienced professionals committed to excellence and innovation.</li>
             <li>We are here to provide you with the best experience possible.</li>
-            <button type="submit" className="w-30 h-15 mt-5 bg-teal-600 text-white px-4 py-2 rounded-md transition duration-300 ease-in-out transform hover:bg-orange-600 hover:scale-105">Blogs</button>
           </ul>
         </div>
       </div>
+
+      {/* ChatGPT Button with Parallax Effect */}
+      <button
+        className="fixed w-12 h-12 bg-teal-600 text-white rounded-full flex items-center justify-center shadow-lg transition-transform transform hover:scale-110 z-50"
+        style={{
+          bottom: `${30 - scrollY * 0.1}px`,
+          right: '20px',
+        }}
+        onClick={handleChatbotClick}
+        aria-label="Chat with ChatGPT"
+      >
+        <FontAwesomeIcon icon={faComments} size="lg" />
+      </button>
+
+      {/* Chatbot Modal */}
+      <ChatbotModal isOpen={isChatbotOpen} onClose={closeChatbot} />
     </div>
   );
 };
